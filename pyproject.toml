@@ -1,0 +1,10 @@
+[project]
+name = "staker"
+version = "0.1.0"
+description = "Utilities for managing Ethereum solo staking."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "click>=8.2.1",
+    "rich>=14.1.0",
+]
