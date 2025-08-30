@@ -94,6 +94,7 @@ def eth2_start(chain: str, eth1_url: str, jwt_path: str, data_dir: str, host: st
     run_command([
         "lighthouse",
         "beacon_node",
+        "--staking",
         "--network",
         chain,
         "--checkpoint-sync-url",
