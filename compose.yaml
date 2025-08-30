@@ -17,6 +17,7 @@ services:
     command: >
       eth1
       start
+      --chain ${STAKER_CHAIN_NAME?}
       --jwt-path /data/common/jwt.hex
       --data-dir /data/eth1
       --host 0.0.0.0
@@ -34,6 +35,7 @@ services:
     command: >
       eth2
       start
+      --chain ${STAKER_CHAIN_NAME?}
       --jwt-path /data/common/jwt.hex
       --data-dir /data/eth2
       --eth1-url http://eth1:2222
@@ -51,12 +53,13 @@ services:
     command: >
       validator
       start
+      --chain ${STAKER_CHAIN_NAME?}
       --data-dir /data/eth2
       --eth2-url http://eth2:3333
       --host 0.0.0.0
       --port 4444
       --suggested-fee-recipient
-      ${SUGGESTED_FEE_RECIPIENT_ADDRESS?}
+      ${STAKER_SUGGESTED_FEE_RECIPIENT_ADDRESS?}
 
     volumes:
       - ./data/eth2:/data/eth2
