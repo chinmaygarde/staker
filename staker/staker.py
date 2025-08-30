@@ -116,7 +116,14 @@ def eth2_start(chain: str, eth1_url: str, jwt_path: str, data_dir: str, host: st
 @click.option("--data-dir", type=str, required=True)
 @click.option("--eth2-url", type=str, default="http://127.0.0.1:3333")
 @click.option("--suggested-fee-recipient", type=str, required=True)
-def validator_start(chain: str, data_dir: str, eth2_url: str, suggested_fee_recipient: str):
+@click.option("--host", type=str, default="127.0.0.1")
+@click.option("--port", type=int, default=4444)
+def validator_start(chain: str,
+                    data_dir: str,
+                    eth2_url: str,
+                    suggested_fee_recipient: str,
+                    host: str,
+                    port: int):
     run_command([
         "lighthouse",
         "validator_client",
@@ -129,6 +136,13 @@ def validator_start(chain: str, data_dir: str, eth2_url: str, suggested_fee_reci
         "--suggested-fee-recipient",
         suggested_fee_recipient,
         "--enable-doppelganger-protection",
+        # This just acknowledges that the traffic is unexcrypted and we won't be exposing it to the public internet.
+        "--unencrypted-http-transport",
+        "--http",
+        "--http-address",
+        host,
+        "--http-port",
+        str(port),
     ])
 
 
