@@ -19,7 +19,8 @@ services:
       start
       --jwt-path /data/common/jwt.hex
       --data-dir /data/eth1
-      --port 9000
+      --host 0.0.0.0
+      --port 2222
     volumes:
       - ./data/common:/data/common
       - ./data/eth1:/data/eth1
@@ -34,7 +35,28 @@ services:
       eth2
       start
       --jwt-path /data/common/jwt.hex
-      --data-dir /data/eth2 --eth1-url http://eth1:9000
+      --data-dir /data/eth2
+      --eth1-url http://eth1:2222
+      --host 0.0.0.0
+      --port 3333
     volumes:
       - ./data/common:/data/common
+      - ./data/eth2:/data/eth2
+
+  validator:
+    depends_on: [eth2]
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: >
+      validator
+      start
+      --data-dir /data/eth2
+      --eth2-url http://eth2:3333
+      --host 0.0.0.0
+      --port 4444
+      --suggested-fee-recipient
+      ${SUGGESTED_FEE_RECIPIENT_ADDRESS}
+
+    volumes:
       - ./data/eth2:/data/eth2

@@ -1,6 +1,4 @@
-[working-directory: 'staker']
-staker:
-  uv run staker.py
+set dotenv-load := true
 
 format:
   uvx ruff format staker
