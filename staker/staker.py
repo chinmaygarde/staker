@@ -37,28 +37,33 @@ def run_command(cmd):
 
     # Raise exception on failure.
     if process.returncode != 0:
-        raise subprocess.CalledProcessError(process.returncode, ' '.join(cmd))
+        raise subprocess.CalledProcessError(process.returncode, " ".join(cmd))
 
 
 @click.group(help="Manage an Ethereum staking setup.")
 def staker():
     pass
 
+
 @staker.group(help="Utilities used to manage a staking setup.")
 def util():
     pass
+
 
 @staker.group(help="Management of the execution layer (ETH1).")
 def eth1():
     pass
 
+
 @staker.group(help="Management of the concensus layer (ETH2).")
 def eth2():
     pass
 
+
 @staker.group(help="Management of the validator.")
 def validator():
     pass
+
 
 @eth1.command("start", help="Start the execution layer (ETH1).")
 @click.option("--chain", type=str, default="hoodi")
@@ -67,20 +72,22 @@ def validator():
 @click.option("--port", type=int, default=2222)
 @click.option("--data-dir", type=str, required=True)
 def eth1_start(chain: str, jwt_path: str, host: str, port: int, data_dir: str):
-    run_command([
-        "reth",
-        "node",
-        "--chain",
-        chain,
-        "--authrpc.jwtsecret",
-        jwt_path,
-        "--authrpc.addr",
-        host,
-        "--authrpc.port",
-        str(port),
-        "--datadir",
-        data_dir,
-    ])
+    run_command(
+        [
+            "reth",
+            "node",
+            "--chain",
+            chain,
+            "--authrpc.jwtsecret",
+            jwt_path,
+            "--authrpc.addr",
+            host,
+            "--authrpc.port",
+            str(port),
+            "--datadir",
+            data_dir,
+        ]
+    )
 
 
 @eth2.command("start", help="Start the concensus layer (ETH2).")
@@ -90,27 +97,32 @@ def eth1_start(chain: str, jwt_path: str, host: str, port: int, data_dir: str):
 @click.option("--data-dir", type=str, required=True)
 @click.option("--host", type=str, default="127.0.0.1")
 @click.option("--port", type=int, default=3333)
-def eth2_start(chain: str, eth1_url: str, jwt_path: str, data_dir: str, host: str, port: int):
-    run_command([
-        "lighthouse",
-        "beacon_node",
-        "--staking",
-        "--network",
-        chain,
-        "--checkpoint-sync-url",
-        f"https://{chain}.checkpoint.sigp.io",
-        "--execution-endpoint",
-        eth1_url,
-        "--execution-jwt",
-        jwt_path,
-        "--datadir",
-        data_dir,
-        "--gui",
-        "--http-address",
-        host,
-        "--http-port",
-        str(port),
-    ])
+def eth2_start(
+    chain: str, eth1_url: str, jwt_path: str, data_dir: str, host: str, port: int
+):
+    run_command(
+        [
+            "lighthouse",
+            "beacon_node",
+            "--staking",
+            "--network",
+            chain,
+            "--checkpoint-sync-url",
+            f"https://{chain}.checkpoint.sigp.io",
+            "--execution-endpoint",
+            eth1_url,
+            "--execution-jwt",
+            jwt_path,
+            "--datadir",
+            data_dir,
+            "--gui",
+            "--http-address",
+            host,
+            "--http-port",
+            str(port),
+        ]
+    )
+
 
 @validator.command("start", help="Start the validator client.")
 @click.option("--chain", type=str, default="hoodi")
@@ -119,36 +131,43 @@ def eth2_start(chain: str, eth1_url: str, jwt_path: str, data_dir: str, host: st
 @click.option("--suggested-fee-recipient", type=str, required=True)
 @click.option("--host", type=str, default="127.0.0.1")
 @click.option("--port", type=int, default=4444)
-def validator_start(chain: str,
-                    data_dir: str,
-                    eth2_url: str,
-                    suggested_fee_recipient: str,
-                    host: str,
-                    port: int):
-    run_command([
-        "lighthouse",
-        "validator_client",
-        "--network",
-        chain,
-        "--datadir",
-        data_dir,
-        "--beacon-nodes",
-        eth2_url,
-        "--suggested-fee-recipient",
-        suggested_fee_recipient,
-        "--enable-doppelganger-protection",
-        # This just acknowledges that the traffic is unexcrypted and we won't be exposing it to the public internet.
-        "--unencrypted-http-transport",
-        "--http",
-        "--http-address",
-        host,
-        "--http-port",
-        str(port),
-    ])
+def validator_start(
+    chain: str,
+    data_dir: str,
+    eth2_url: str,
+    suggested_fee_recipient: str,
+    host: str,
+    port: int,
+):
+    run_command(
+        [
+            "lighthouse",
+            "validator_client",
+            "--network",
+            chain,
+            "--datadir",
+            data_dir,
+            "--beacon-nodes",
+            eth2_url,
+            "--suggested-fee-recipient",
+            suggested_fee_recipient,
+            "--enable-doppelganger-protection",
+            # This just acknowledges that the traffic is unexcrypted and
+            # won't be exposing it to the public internet.
+            "--unencrypted-http-transport",
+            "--http",
+            "--http-address",
+            host,
+            "--http-port",
+            str(port),
+        ]
+    )
 
 
 @util.command(help="Generate a JWT.")
-@click.option("--jwt-path", help="The path to write the JWT to.", type=str, required=True)
+@click.option(
+    "--jwt-path", help="The path to write the JWT to.", type=str, required=True
+)
 def generate_jwt(jwt_path: str):
     # Generate 32 random bytes
     secret_bytes = secrets.token_bytes(32)
