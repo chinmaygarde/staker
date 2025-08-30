@@ -44,6 +44,9 @@ def run_command(cmd):
 def staker():
     pass
 
+@staker.group(help="Utilities used to manage a staking setup.")
+def util():
+    pass
 
 @staker.group(help="Management of the execution layer (ETH1).")
 def eth1():
@@ -53,11 +56,15 @@ def eth1():
 def eth2():
     pass
 
+@staker.group(help="Management of the validator.")
+def validator():
+    pass
+
 @eth1.command("start", help="Start the execution layer (ETH1).")
 @click.option("--chain", type=str, default="hoodi")
 @click.option("--jwt-path", type=str, required=True)
 @click.option("--host", type=str, default="0.0.0.0")
-@click.option("--port", type=int, default=8551)
+@click.option("--port", type=int, default=2222)
 @click.option("--data-dir", type=str, required=True)
 def eth1_start(chain: str, jwt_path: str, host: str, port: int, data_dir: str):
     run_command([
@@ -78,10 +85,12 @@ def eth1_start(chain: str, jwt_path: str, host: str, port: int, data_dir: str):
 
 @eth2.command("start", help="Start the concensus layer (ETH2).")
 @click.option("--chain", type=str, default="hoodi")
-@click.option("--eth1-url", type=str, required=True)
+@click.option("--eth1-url", type=str, default="http://0.0.0.0:2222")
 @click.option("--jwt-path", type=str, required=True)
 @click.option("--data-dir", type=str, required=True)
-def eth2_start(chain: str, eth1_url: str, jwt_path: str, data_dir: str):
+@click.option("--host", type=str, default="0.0.0.0")
+@click.option("--port", type=int, default=3333)
+def eth2_start(chain: str, eth1_url: str, jwt_path: str, data_dir: str, host: str, port: int):
     run_command([
         "lighthouse",
         "beacon_node",
@@ -95,11 +104,32 @@ def eth2_start(chain: str, eth1_url: str, jwt_path: str, data_dir: str):
         jwt_path,
         "--datadir",
         data_dir,
+        "--gui",
+        "--http-address",
+        host,
+        "--http-port",
+        str(port),
     ])
 
-@staker.group(help="Utilities used to manage a staking setup.")
-def util():
-    pass
+@validator.command("start", help="Start the validator client.")
+@click.option("--chain", type=str, default="hoodi")
+@click.option("--data-dir", type=str, required=True)
+@click.option("--eth2-url", type=str, default="http://0.0.0.0:3333")
+@click.option("--suggested-fee-recipient", type=str, required=True)
+def validator_start(chain: str, data_dir: str, eth2_url: str, suggested_fee_recipient: str):
+    run_command([
+        "lighthouse",
+        "validator_client",
+        "--network",
+        chain,
+        "--datadir",
+        data_dir,
+        "--beacon-nodes",
+        eth2_url,
+        "--suggested-fee-recipient",
+        suggested_fee_recipient,
+        "--enable-doppelganger-protection",
+    ])
 
 
 @util.command(help="Generate a JWT.")
