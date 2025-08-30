@@ -8,5 +8,5 @@ format:
 check_format:
   uvx ruff format staker --diff
 
-docker:
-  docker build . -t staker
+up:
+  docker compose up --build
