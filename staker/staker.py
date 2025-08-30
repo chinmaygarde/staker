@@ -63,7 +63,7 @@ def validator():
 @eth1.command("start", help="Start the execution layer (ETH1).")
 @click.option("--chain", type=str, default="hoodi")
 @click.option("--jwt-path", type=str, required=True)
-@click.option("--host", type=str, default="0.0.0.0")
+@click.option("--host", type=str, default="127.0.0.1")
 @click.option("--port", type=int, default=2222)
 @click.option("--data-dir", type=str, required=True)
 def eth1_start(chain: str, jwt_path: str, host: str, port: int, data_dir: str):
@@ -85,10 +85,10 @@ def eth1_start(chain: str, jwt_path: str, host: str, port: int, data_dir: str):
 
 @eth2.command("start", help="Start the concensus layer (ETH2).")
 @click.option("--chain", type=str, default="hoodi")
-@click.option("--eth1-url", type=str, default="http://0.0.0.0:2222")
+@click.option("--eth1-url", type=str, default="http://127.0.0.1:2222")
 @click.option("--jwt-path", type=str, required=True)
 @click.option("--data-dir", type=str, required=True)
-@click.option("--host", type=str, default="0.0.0.0")
+@click.option("--host", type=str, default="127.0.0.1")
 @click.option("--port", type=int, default=3333)
 def eth2_start(chain: str, eth1_url: str, jwt_path: str, data_dir: str, host: str, port: int):
     run_command([
@@ -114,7 +114,7 @@ def eth2_start(chain: str, eth1_url: str, jwt_path: str, data_dir: str, host: st
 @validator.command("start", help="Start the validator client.")
 @click.option("--chain", type=str, default="hoodi")
 @click.option("--data-dir", type=str, required=True)
-@click.option("--eth2-url", type=str, default="http://0.0.0.0:3333")
+@click.option("--eth2-url", type=str, default="http://127.0.0.1:3333")
 @click.option("--suggested-fee-recipient", type=str, required=True)
 def validator_start(chain: str, data_dir: str, eth2_url: str, suggested_fee_recipient: str):
     run_command([
