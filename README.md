@@ -19,4 +19,10 @@ There are other projects similar to this one that make the process of solo staki
 
 ## Launching
 
-- `just up`: Builds docker images and launches the containers.
+- `just launch`: Builds docker images and launches the containers.
+
+## Notes
+
+- Use compounding accounts (0x02 type) for validators.
+- Use [execution-layer initiated withdrawals](https://hoodi.launchpad.ethereum.org/en/withdrawals) (added with EIP-7002 in Pectra) instead of initiating them via a voluntary broadcast message from a validator.
+- There must be a 27.3 hour gap between activation and exit. This may cause some head scratching when testing on a testnet.

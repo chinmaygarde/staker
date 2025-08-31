@@ -9,5 +9,5 @@ check_format:
   uvx ruff format staker --diff
 
 # Launch a docker compose setup suitable for solo home staking.
-up:
+launch:
   docker compose up --build
