@@ -10,6 +10,7 @@ services:
       - ${STAKER_DATA_DIR?}/common:/data/common
 
   eth1:
+    restart: unless-stopped
     depends_on: [jwt]
     build:
       context: .
@@ -28,6 +29,7 @@ services:
 
 
   eth2:
+    restart: unless-stopped
     depends_on: [eth1]
     build:
       context: .
@@ -46,6 +48,7 @@ services:
       - ${STAKER_DATA_DIR?}/eth2:/data/eth2
 
   validator:
+    restart: unless-stopped
     depends_on: [eth2]
     build:
       context: .
