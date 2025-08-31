@@ -8,8 +8,8 @@ There are other projects similar to this one that make the process of solo staki
 
 - A Linux or macOS machine. Either arm64 or amd64 is fine.
 - **Docker**: For containerized deployment.
-- **Just**: A task runner.
-- **UV**: For managing python projects.
+- [**Just**](https://just.systems/man/en/): A task runner.
+- [**UV**](https://docs.astral.sh/uv/): For managing python projects.
 - **Git**: For cloning and managing the repository.
 
 ## Prerequisites
