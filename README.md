@@ -1,6 +1,6 @@
 # Staker
 
-A home solo Ethereum staking setup.
+A solo home staking setup for Ethereum.
 
 There are other projects similar to this one that make the process of solo staking more turnkey. This is just a collection of scripts I use and is not meant to be general purpose.
 
