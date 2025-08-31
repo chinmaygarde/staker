@@ -6,6 +6,7 @@ There are other projects similar to this one that make the process of solo staki
 
 ## Requirements
 
+- A Linux or macOS machine. Either arm64 or amd64 is fine.
 - **Docker**: For containerized deployment.
 - **Just**: A task runner.
 - **UV**: For managing python projects.
@@ -13,9 +14,11 @@ There are other projects similar to this one that make the process of solo staki
 
 ## Prerequisites
 
-- Populate a `.env` file file with the environment variables describing the setup.
+- Make sure you have installed all the software in the [requirements](#requirements) section.
+- Populate a `.env` file file with the environment variables describing the setup. All variables are mandatory.
   - `STAKER_CHAIN_NAME`: The chain name (`mainnet`, `hoodi`)
   - `STAKER_SUGGESTED_FEE_RECIPIENT_ADDRESS`: The fee recipient to use when setting up the beacon chain.
+  - `STAKER_DATA_DIR`: The directory used by the containers to store their contents. If its a relative directory, it must start with "./".
 
 ## Launching
 

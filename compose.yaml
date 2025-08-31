@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     command: util generate-jwt --jwt-path /data/common/jwt.hex
     volumes:
-      - ./data/common:/data/common
+      - ${STAKER_DATA_DIR?}/common:/data/common
 
   eth1:
     depends_on: [jwt]
@@ -23,8 +23,8 @@ services:
       --host 0.0.0.0
       --port 2222
     volumes:
-      - ./data/common:/data/common
-      - ./data/eth1:/data/eth1
+      - ${STAKER_DATA_DIR?}/common:/data/common
+      - ${STAKER_DATA_DIR?}/eth1:/data/eth1
 
 
   eth2:
@@ -42,8 +42,8 @@ services:
       --host 0.0.0.0
       --port 3333
     volumes:
-      - ./data/common:/data/common
-      - ./data/eth2:/data/eth2
+      - ${STAKER_DATA_DIR?}/common:/data/common
+      - ${STAKER_DATA_DIR?}/eth2:/data/eth2
 
   validator:
     depends_on: [eth2]
@@ -62,4 +62,4 @@ services:
       ${STAKER_SUGGESTED_FEE_RECIPIENT_ADDRESS?}
 
     volumes:
-      - ./data/eth2:/data/eth2
+      - ${STAKER_DATA_DIR?}/eth2:/data/eth2
