@@ -20,6 +20,14 @@ There are other projects similar to this one that make the process of solo staki
   - `STAKER_SUGGESTED_FEE_RECIPIENT_ADDRESS`: The fee recipient to use when setting up the beacon chain.
   - `STAKER_DATA_DIR`: The directory used by the containers to store their contents. If its a relative directory, it must start with "./".
 
+An example `.env` file:
+
+```txt
+export STAKER_SUGGESTED_FEE_RECIPIENT_ADDRESS=<your_recipient_address>
+export STAKER_CHAIN_NAME=hoodi
+export STAKER_DATA_DIR=./data
+```
+
 ## Launching
 
 - `just launch`: Builds docker images and launches the containers.
