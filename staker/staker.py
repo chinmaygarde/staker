@@ -31,7 +31,7 @@ def run_command(cmd):
 
     # Stream output as it arrives.
     for line in process.stdout:
-        print(line, end="")
+        print(line, end="", flush=True)
 
     process.wait()
 
