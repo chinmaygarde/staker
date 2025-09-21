@@ -152,7 +152,7 @@ def validator_start(
             "--suggested-fee-recipient",
             suggested_fee_recipient,
             "--enable-doppelganger-protection",
-            # This just acknowledges that the traffic is unexcrypted and
+            # This just acknowledges that the traffic is unencrypted and
             # won't be exposing it to the public internet.
             "--unencrypted-http-transport",
             "--http",
